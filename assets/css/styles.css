@@ -1,3 +1,45 @@
-header {
-    text-align: center;
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
 }
+
+.container {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 0.5fr 1fr 1fr 1fr;
+    grid-template-areas: 
+        "title title title title"
+        "sidebar current-city current-city current-city"
+        "sidebar current-city current-city current-city"
+        "sidebar forecast forecast forecast";
+    
+}
+
+.title {
+    background: #3D688F;
+    grid-area: title;
+    text-align: center;
+    
+}
+
+#sidebar {
+    background: coral;
+    grid-area: sidebar;
+    padding: 10px;
+}
+
+#current-city {
+    background: cyan;
+    grid-area: current-city;
+    padding: 10px;
+}
+
+#forecast {
+    background: darkgoldenrod;
+    grid-area: forecast;
+    padding: 10px;
+}
+
+
