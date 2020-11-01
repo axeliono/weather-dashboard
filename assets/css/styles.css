@@ -16,8 +16,8 @@
         "sidebar forecast forecast forecast";
     
 }
-
-.title {
+/* Grid distribution start */
+header {
     background: #3D688F;
     grid-area: title;
     text-align: center;
@@ -40,6 +40,16 @@
     background: darkgoldenrod;
     grid-area: forecast;
     padding: 10px;
+}
+
+/* Grid distribution end */
+/* Sidebar Styles Start */
+
+/* Sidebar Styles end */
+
+/* Searched City Section Styles */
+.info-list{
+    list-style-type: none;
 }
 
 
