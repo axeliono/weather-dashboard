@@ -7,5 +7,5 @@
 
 
 
-![screenshot](./images/code-challenge-screenshot.jpg)
+![screenshot](./assets/images/code-challenge-screenshot.jpg)
 https://axeliono.github.io/weather-dashboard/
