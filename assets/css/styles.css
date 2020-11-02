@@ -28,7 +28,6 @@
 header {
     grid-area: title;
     text-align: center;
-    font-size: larger;
     
 }
 
@@ -60,14 +59,35 @@ header {
     flex-direction: column;
     justify-content: space-evenly;
 }
-
+.forecast-info-list {
+    list-style-type: none;
+}
 button {
-    border-color: var(--primary);
+    border: 5px, line, var(--primary);
     color: var(--primary);
-    margin: 25px;
-    border-radius: 25px;
+    margin: 5px;
+    
 }
 
-.info-list {
+.search-history-card {
+    width: 50%;
+    border: 1px, solid, var(--primary);
+    padding: 5px;
+    
+}
+.search-history-card:hover {
+    background-color: var(--primary);
+    color: var(--secondary);
+    cursor: pointer;
+}
 
+.input {
+    font-size: 25px;
+    margin: 5px;
+    width: 55%;
+}
+
+.forecast-container {
+    display: flex;
+    flex-direction: row;
 }
