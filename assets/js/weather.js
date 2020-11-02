@@ -79,11 +79,28 @@ var displayCityWeather = function(data) {
     document.querySelector("#current-city").appendChild(cityTitle);
     document.querySelector("#current-city").appendChild(infoList);
 
+    //getUVData(data);
+
     
 
-    //var uvsearch = fetch("http://api.openweathermap.org/data/2.5/uvi?lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&appid=5afd8dce607c094cdbd2b19c029fb72e")
+    
         
 };
+
+var getUVData = function(data) {
+    var latitude = data.lat;
+    var longitude = data.lon;
+    fetch("https://api.openweathermap.org/data/2.5/onecall?lat="+ {latitude}+ "&lon="+{longitude}+"&exclude=hourly,daily&appid=5afd8dce607c094cdbd2b19c029fb72e")
+        .then(function(response) {
+            response.json().then(function(data) {
+                console.log(data);
+            })
+        })
+}
+
+var displayUVData = function() {
+
+}
 
 var saveData = function(currentCity) {
     var searchItemsArr;
@@ -106,11 +123,14 @@ var saveData = function(currentCity) {
 
 var displaySearchHistory = function() {
     debugger;
+    if(!localStorage.getItem("searchHistory")){
+        localStorage.setItem("searchHistory", "");
+    }
     searchHistory = localStorage.getItem("searchHistory");
     var searchedItemsArr = searchHistory.split(",");
     document.querySelector("#search-history").innerHTML = "";
     for(i = 0; i < searchedItemsArr.length; i++) {
-        var cityCard = document.createElement("p");
+        var cityCard = document.createElement("div");
         cityCard.className = "search-history-card";
         cityCard.innerHTML = searchedItemsArr[i].replace("\"","").replace("\"", "");
         console.log(cityCard);
@@ -125,4 +145,3 @@ var displaySearchHistory = function() {
 
 
 cityFormEl.addEventListener("submit",submitFormHandler);
-displaySearchHistory();
