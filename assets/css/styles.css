@@ -2,6 +2,13 @@
     margin: 0;
     padding: 0;
     border: 0;
+    box-sizing: border-box;
+    font-family: 'Merriweather', serif;
+
+}
+:root {
+    --primary: #85144b;
+    --secondary: #7FDBFF;
 }
 
 .container {
@@ -14,30 +21,28 @@
         "sidebar current-city current-city current-city"
         "sidebar current-city current-city current-city"
         "sidebar forecast forecast forecast";
-    
+    background-color: var(--secondary);
+    color: var(--primary);
 }
 /* Grid distribution start */
 header {
-    background: #3D688F;
     grid-area: title;
     text-align: center;
+    font-size: larger;
     
 }
 
 #sidebar {
-    background: coral;
     grid-area: sidebar;
     padding: 10px;
 }
 
 #current-city {
-    background: cyan;
     grid-area: current-city;
     padding: 10px;
 }
 
 #forecast {
-    background: darkgoldenrod;
     grid-area: forecast;
     padding: 10px;
 }
@@ -50,6 +55,19 @@ header {
 /* Searched City Section Styles */
 .info-list{
     list-style-type: none;
+    font-size: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
 
+button {
+    border-color: var(--primary);
+    color: var(--primary);
+    margin: 25px;
+    border-radius: 25px;
+}
 
+.info-list {
+
+}

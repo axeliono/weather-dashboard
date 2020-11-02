@@ -6,6 +6,8 @@ var infoObject = {
     units: [" \u2109", "%", " MPH"]
 };
 
+var searchHistory = [];
+
 
 
 var submitFormHandler = function(event) {
@@ -28,12 +30,19 @@ var fetchCityInfo = function(city) {
     var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=5afd8dce607c094cdbd2b19c029fb72e";
     fetch(apiUrl)
         .then(function(response) {
-            response.json().then(function(data){
-                displayCityWeather(data);
-                saveData(data.name);
-            });
+            if(response.ok){
+                response.json().then(function(data){
+                    displayCityWeather(data);
+                    saveData(JSON.stringify(data.name));
+                    displaySearchHistory();
+                });
+            }
+            else {
+                alert("Error: " + response.statusText);
+            }
+            
         });
-};S
+};
 
 var displayCityWeather = function(data) {
     //clear previous data
@@ -47,17 +56,19 @@ var displayCityWeather = function(data) {
     var currentCity = data.name;
     var d = new Date();
 
-    infoObject.infoData.push(data.main.temp, data.main.humidity, data.wind.speed);
+    infoObject.infoData = [data.main.temp, data.main.humidity, data.wind.speed];
 
     var cityTitle = document.createElement("h2");
     cityTitle.className = "title";
     cityTitle.setAttribute("id", "city-name");
-    cityTitle.innerHTML = currentCity + " " + d;
+    cityTitle.innerHTML = currentCity + "<br>" + " " + d;
 
     //currentCity + " (" + d.getMonth() + "/" + d.getDay() + "/" + d.getFullYear() + ")";
 
     
-    let infoList = document.querySelector(".info-list");
+    let infoList = document.createElement("ul");
+    infoList.className = "info-list";
+    infoList.innerHTML = "";
 
     for(i = 0; i < infoObject.infoData.length; i++) {
         infoListEl = document.createElement("li");
@@ -75,23 +86,43 @@ var displayCityWeather = function(data) {
 };
 
 var saveData = function(currentCity) {
-    if(!(localStorage.getItem("cities"))) {
-        localStorage.setItem("cities", "");
-    }
-
-    if(!JSON.stringify(localStorage.getItem("cities")).indexOf(currentCity)) {
-        savedCities = JSON.stringify(localStorage.getItem("cities"));
-        savedCities = savedCities.split(" ");
-    
-        if(savedCities.length === 5) {
-            savedCities.slice(0);
+    var searchItemsArr;
+    var searchedItems = localStorage.getItem("searchHistory");
+    if(searchedItems){
+        searchItemsArr = searchedItems.split(",");
+        if(localStorage.getItem("searchHistory").indexOf(currentCity) === -1){
+            searchItemsArr.push(currentCity);
+            localStorage.setItem("searchHistory", searchItemsArr);
+            console.log(searchedItems.length);
         }
-    
-        savedCities.push(currentCity);
-        localStorage.setItem("cities", JSON.stringify(savedCities));
     }
+    else {
+        localStorage.setItem("searchHistory", currentCity);
+    }
+    
+    
 
 }
 
+var displaySearchHistory = function() {
+    debugger;
+    searchHistory = localStorage.getItem("searchHistory");
+    var searchedItemsArr = searchHistory.split(",");
+    document.querySelector("#search-history").innerHTML = "";
+    for(i = 0; i < searchedItemsArr.length; i++) {
+        var cityCard = document.createElement("p");
+        cityCard.className = "search-history-card";
+        cityCard.innerHTML = searchedItemsArr[i].replace("\"","").replace("\"", "");
+        console.log(cityCard);
+        cityCard.addEventListener("click", fetchCityInfo(searchedItemsArr[i]));
+        document.querySelector("#search-history").appendChild(cityCard);
+    }
+}
+
+
+
+
+
 
 cityFormEl.addEventListener("submit",submitFormHandler);
+displaySearchHistory();
